@@ -1,6 +1,7 @@
 #dataprep
 
-require(tidyverse)
+require("tidyverse")
+require("geosphere")
 
 #---------------------------------------------------------------------
 #selecionar diretorio
@@ -179,13 +180,13 @@ faixascity3 = data.frame(city = faixascity2$city,
 faixascity3
 
 #---------------------------------------------------------------------
-##TAXA - time
-
-
-#---------------------------------------------------------------------
 #distancia geodesica local transacao - endereco titular
 
-
+dados = dados %>%
+    mutate(distGeo = distGeo(matrix(c(dados$long, dados$lat), 
+                                    ncol = 2),
+                             matrix(c(dados$merch_long, dados$merch_lat), 
+                                    ncol=2)))
 
 #---------------------------------------------------------------------
 #inclusao das faixas na base
@@ -195,5 +196,5 @@ dados = left_join(dados, faixascity3)
 
 #---------------------------------------------------------------------
 #exportar dados pra csv
-write.csv(dados, file = "dados.csv")
-
+View(dados)
+write.csv(dados, file = "dadosTrain.csv")
