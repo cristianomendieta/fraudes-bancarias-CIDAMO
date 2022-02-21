@@ -1,5 +1,13 @@
 #dataprep
 
+#---------------------------------------------------------------------
+#link do dataset do kaggle
+#Credit Card Transactions Fraud Detection Dataset
+#Simulated Credit Card Transactions generated using Sparkov
+#https://www.kaggle.com/kartik2112/fraud-detection?select=fraudTrain.csv
+
+#---------------------------------------------------------------------
+#pacotes
 require("tidyverse")
 require("geosphere")
 
@@ -198,3 +206,7 @@ dados = left_join(dados, faixascity3)
 #exportar dados pra csv
 View(dados)
 write.csv(dados, file = "dadosTrain.csv")
+
+#---------------------------------------------------------------------
+#link dataprep dadosTrain.csv
+#https://drive.google.com/file/d/1KxBz9YLH2IHifDq6m-s25KLkLJRDJgsq/view?usp=sharing
