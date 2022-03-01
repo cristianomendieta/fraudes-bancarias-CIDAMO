@@ -1,4 +1,5 @@
-#dataprep
+#---------------------------------------------------------------------
+#DATAPREP - TRAIN
 
 #---------------------------------------------------------------------
 #link do dataset do kaggle
@@ -7,9 +8,14 @@
 #https://www.kaggle.com/kartik2112/fraud-detection?select=fraudTrain.csv
 
 #---------------------------------------------------------------------
+#link dataprep dadosTrain.csv e dadosTest.csv
+#https://drive.google.com/drive/folders/1HSPj5dL_1RDcPEj-KuE4cZBD1FEkvGjg?usp=sharing
+
+#---------------------------------------------------------------------
 #pacotes
 require("tidyverse")
 require("geosphere")
+require("lubridate")
 
 #---------------------------------------------------------------------
 #selecionar diretorio
@@ -211,6 +217,102 @@ dados = left_join(dados, faixascity3)
 View(dados)
 write.csv(dados, file = "dadosTrain.csv")
 
+
 #---------------------------------------------------------------------
-#link dataprep dadosTrain.csv
-#https://drive.google.com/drive/folders/1HSPj5dL_1RDcPEj-KuE4cZBD1FEkvGjg?usp=sharing
+#DATAPREP - TEST
+
+#---------------------------------------------------------------------
+#pacotes
+require("tidyverse")
+require("geosphere")
+require("lubridate")
+
+#---------------------------------------------------------------------
+#selecionar diretorio
+setwd("~/R/cidamo")
+
+#---------------------------------------------------------------------
+#importar dados, vazio como NA, string como fatores
+dadosT = read.csv("fraudTest.csv", sep = ",",
+                 na.strings = "", stringsAsFactors = T)
+
+dadosT = tibble(dadosT)
+
+#---------------------------------------------------------------------
+#visualizar dados
+View(dadosT)
+head(dadosT)
+str(dadosT)
+summary(dadosT)
+
+#---------------------------------------------------------------------
+#SIGNIFICADO DAS VARIAVEIS
+
+#index - Unique Identifier for each row
+#transdatetrans_time - Transaction DateTime
+#cc_num - Credit Card Number of Customer
+#merchant - Merchant Name
+#category - Category of Merchant
+#amt - Amount of Transaction
+#first - First Name of Credit Card Holder
+#last - Last Name of Credit Card Holder
+#gender - Gender of Credit Card Holder
+#street - Street Address of Credit Card Holder
+#city - City of Credit Card Holder
+#state - State of Credit Card Holder
+#zip - Zip of Credit Card Holder
+#lat - Latitude Location of Credit Card Holder
+#long - Longitude Location of Credit Card Holder
+#city_pop - Credit Card Holder's City Population
+#job - Job of Credit Card Holder
+#dob - Date of Birth of Credit Card Holder
+#trans_num - Transaction Number
+#unix_time - UNIX Time of transaction
+#merch_lat - Latitude Location of Merchant
+#merch_long - Longitude Location of Merchant
+#is_fraud - Fraud Flag <--- Target Class
+
+#---------------------------------------------------------------------
+#mostra todas as linhas incompletas
+dadosT[!complete.cases(dadosT),]
+
+#---------------------------------------------------------------------
+#duplicados, repetidos
+xT = dadosT[duplicated(dadosT$cc_num),]
+xT
+
+#---------------------------------------------------------------------
+#quantidade de clientes unicos
+length(unique(dadosT$cc_num))
+
+#---------------------------------------------------------------------
+#separa data e horario da coluna trans_date_trans_time 
+dadosT = dadosT %>% 
+    separate(col = trans_date_trans_time, 
+             into = c("date","time"),
+             sep = " ")
+dadosT$date = ymd(dadosT$date)
+
+#---------------------------------------------------------------------
+#converte H:M:S em segundos e inclui na base
+secT= period_to_seconds(hms(dadosT$time)) 
+dadosT$sec = secT
+
+#---------------------------------------------------------------------
+#inclusao das faixas na base
+dadosT = left_join(dadosT, faixascategory3)
+dadosT = left_join(dadosT, faixasjob3)
+dadosT = left_join(dadosT, faixascity3)
+
+#---------------------------------------------------------------------
+#distancia geodesica local transacao - endereco titular
+dadosT = dadosT %>%
+    mutate(distGeo = distGeo(matrix(c(dadosT$long, dadosT$lat), 
+                                    ncol = 2),
+                             matrix(c(dadosT$merch_long, dadosT$merch_lat), 
+                                    ncol=2)))
+
+#---------------------------------------------------------------------
+#exportar dados pra csv
+View(dadosT)
+write.csv(dadosT, file = "dadosTest.csv")
