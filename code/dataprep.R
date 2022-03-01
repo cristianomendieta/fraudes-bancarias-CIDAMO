@@ -1,7 +1,4 @@
 #---------------------------------------------------------------------
-#DATAPREP - TRAIN
-
-#---------------------------------------------------------------------
 #link do dataset do kaggle
 #Credit Card Transactions Fraud Detection Dataset
 #Simulated Credit Card Transactions generated using Sparkov
@@ -10,6 +7,10 @@
 #---------------------------------------------------------------------
 #link dataprep dadosTrain.csv e dadosTest.csv
 #https://drive.google.com/drive/folders/1HSPj5dL_1RDcPEj-KuE4cZBD1FEkvGjg?usp=sharing
+
+
+#---------------------------------------------------------------------
+#DATAPREP - TRAIN
 
 #---------------------------------------------------------------------
 #pacotes
