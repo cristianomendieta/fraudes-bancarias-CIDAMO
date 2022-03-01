@@ -75,8 +75,12 @@ dados = dados %>%
     separate(col = trans_date_trans_time, 
              into = c("date","time"),
              sep = " ")
-dados
+dados$date = ymd(dados$date)
 
+#---------------------------------------------------------------------
+#converte H:M:S em segundos e inclui na base
+sec = period_to_seconds(hms(dados$time)) 
+dados$sec = sec
 
 #---------------------------------------------------------------------
 ##TAXA - category
@@ -209,4 +213,4 @@ write.csv(dados, file = "dadosTrain.csv")
 
 #---------------------------------------------------------------------
 #link dataprep dadosTrain.csv
-#https://drive.google.com/file/d/1KxBz9YLH2IHifDq6m-s25KLkLJRDJgsq/view?usp=sharing
+#https://drive.google.com/drive/folders/1HSPj5dL_1RDcPEj-KuE4cZBD1FEkvGjg?usp=sharing
