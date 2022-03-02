@@ -90,6 +90,13 @@ sec = period_to_seconds(hms(dados$time))
 dados$sec = sec
 
 #---------------------------------------------------------------------
+#converte F em 0 e M em 1
+dados$gender = as.character(dados$gender)
+dados$gender[dados$gender == "F"] = 0
+dados$gender[dados$gender == "M"] = 1
+dados$gender = as.numeric(dados$gender)
+
+#---------------------------------------------------------------------
 ##TAXA - category
 ratecategory = dados %>%
     group_by(category) %>%
@@ -298,6 +305,13 @@ dadosT$date = ymd(dadosT$date)
 #converte H:M:S em segundos e inclui na base
 secT= period_to_seconds(hms(dadosT$time)) 
 dadosT$sec = secT
+
+#---------------------------------------------------------------------
+#converte F em 0 e M em 1
+dadosT$gender = as.character(dadosT$gender)
+dadosT$gender[dadosT$gender == "F"] = 0
+dadosT$gender[dadosT$gender == "M"] = 1
+dadosT$gender = as.numeric(dadosT$gender)
 
 #---------------------------------------------------------------------
 #inclusao das faixas na base
