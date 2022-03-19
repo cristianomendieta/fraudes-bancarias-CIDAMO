@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\usepackage[portuguese]{babel}
+
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Regressão Logística}
+\author{Mateus Fernandes de Souza}
+
+\begin{document}
+\maketitle
+
+\section{Definição}
+A Regressão Logística (RegLog) é uma técnica tradicional estatística que utiliza observações indendentes para formar um modelo que possibilita predizer valores, normalmente de forma binária.
+Em sua forma, ela é muito parecida com a Regressão Linear, mas a grande diferença é que nessa a variável resposta pode ser vários valores numéricos, enquanto na logística ela assume valores entre 0 e 1, tratando assim de probabilidades, essa que significa qual é a probabilidade da variável resposta assuma o valor 1. Pelo padrão, todas as respostas com valores menos que 0,5 são consideradas com 0, enquanto as maiores ou iguals a 0,5 são consideradas 1, mas isso pode mudar de acordo com os parâmetros buscados por esse teste.
+
+\subsection{Fórmula}
+$p(X) = \frac{1}{1+e^-{(x'\beta)}}$
+, Sendo ${(x'\beta)} = \beta0 + \beta1Xi1 + \beta2Xi2 + ... + \beta kXik $
+
+\subsection{Como encontrar $\beta$}
+
+Para encontrar os valores de $\beta$, é necessário fazer o seguinte cáculo:
+Considerando a variável resposta com distribuição de Bernoulli com função de probabilidade.
+
+yi = 1, então $P(yi = 1) = \pi i$
+
+yi = 0, então $P(yi = 0) = 1 - \pi i$
+
+O Valor esperado da variável resposta é $E(yi) = x'\beta = \pi i$
+
+$Odds = \frac{\pi}{1-\pi}$
+
+Então, temos que $ln \frac{odds(xi + 1)}{odds_xi} = \beta1$
+
+\subsection{Interpretação dos parâmetros}
+
+$odds ration = \frac{odds(xi +1}{odds_x1} = e^\beta1 $
+
+Exemplo: Varíavel resposta é do tipo morrer(1) e não morrer(0), e a variável preditora que está sendo analisada é a idade, então caso eu encontre, por exemplo, um valor para odds ration = 2, isso significa que a chance de morrer ao aumentar em 1 ano na idade aumenta em 2x em relação àquele que tem menos 1 ano de idade. 
+
+\subsection{Como saber se uma variável é importante para o modelo}
+
+Após estimar os coeficientes $\beta$, temos interesse em assegurar a significância das variáveis do modelo. isto geralmente envolve a formulação e teste de uma hipótese estatística para determinar se a variável preditora no modelo é significativamente relacionada com a variável resposta. Os testes de hipóteses mais utilizados são os testes da Razão da Verossimilhança e Wald.
+
+\subsection{Medidas da qualidade do ajuste do modelo}
+
+O desempenho geral do modelo ajustado pode ser medido por diversos testes de qualidade de ajuste. Dois testes requerem dados replicados (múltiplas obsaervações com os mesmos valores para todos os preditores): Qui Quadradado de Pearson e Deviance. O teste de Hosmer-Lemeshow é útil para conjuntos de dados não replicados ou que contêm apenas algumas observações replicadas (as observações são agrupadas com base em suas probabilidades estimadas)
+
+\subsection{Desempenho do modelo}
+
+Para avaliar o desempenho do modelo pode-se utilizar: Acurácia, Recall, Especifidade, Precisão e ROC-AUC. Essas são as principais formas de avaliação.
+
+\subsection{Gráfico}
+
+\begin{figure}[!h]
+\includegraphics[width=0.3\textwidth]{REGLOG.png}
+\end{figure}
+
+\end{document}
