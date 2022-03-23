@@ -9,7 +9,7 @@
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
-\title{Modelos de aprendizado de máquina aplicados à detecção de fraudes bancárias}
+\title{Modelos de aprendizado de máquina aplicados à detecção de fraudes bancárias em transações de cartão de crédito}
 \author{Cristiano Mendieta, Gabrielly Halas, Kléber Benatti, Mateus Fernandes}
 
 \begin{document}
@@ -24,9 +24,15 @@
 %----------------------------------------------------------------------------------------------------------
 \section{Introdução}
 
-[inserir]
-Principais desafios:
+A digitalização dos serviços bancários possibilita ao cliente realizar transações bancárias de maneira simplificada. Assim como, esse benefício também é munido de ameaças, como as fraudes que burlam as regras de segurança dos bancos. Por essa razão, a fim de evitar possíveis transações fraudulentas, frequentemente as empresas buscam desenvolver e aperfeiçoar métodos que detectem esse tipo de ação buscando a associação automática de cada transação a uma das categorias "fraude" ou "não-fraude". Esse sistema precisa ser robusto a inconsistências nos dados, ter boa capacidade de generalização e ser eficiente para processar grandes quantidades de transações. (RAMOS, 2014, p. 1,2)
 
+Porém, alguns desafios são enfrentados nessas situações. Existe uma grande variabilidade de ataques, os quais são aprimorados rapidamente, ou seja, a tecnologia dos atacantes pode se desenvolver mais rapidamente do que a das empresas. Isso sugere a necessidade de atualizações constantes do modelo de detecção de fraudes com tempo reduzido de implementação. (RAMOS, 2014, p. 2)
+
+Ademais, o volume de transações financeiras realizadas diariamente é grande, sendo que as caracterizadas como fraudulentas ocorrem em quantidade bastante inferior às não-fraudulentas, isto é, as classes de transações fraudulentas e legítimas são desbalanceadas. Por isso, ao mesmo tempo que o modelo precisa tratar o problema de desbalanceamento de classes para não ter seu desempenho prejudicado, ele precisa ser eficiente para interromper ataques em andamento. (RAMOS, 2014, p. 2)
+
+Nesse sentido, é importante que a acurácia do modelo seja alta, de modo que seja possível minimizar falsos-negativos (fraudes detectadas como não-fraudes) e falsos-positivos (não-fraudes detectadas como fraudes). Esse ponto é fundamental para evitar desgastes com clientes quando uma transação não fraudulenta é classificada como tal. (RAMOS, 2014, p. 2)
+
+Resumidamente, os principais pontos enfrentados nesse cenário são:
 \begin{enumerate}
     \item Muitos padrões de fraude;
     \item Mudança de tendência nas fraudes;
@@ -35,12 +41,7 @@ Principais desafios:
     \item Órgãos reguladores exigem interpretabilidade em alguns cenários.
 \end{enumerate}
 
-Serão abordados problemas (1), (4) e (5) no projeto, a partir do estudo de:
-
-\begin{itemize}
-    \item Modelos interpretáveis: Árvores de Decisão e Regressão Logística.
-\end{itemize}
-
+Diante disso, esse trabalho implementa e analisa modelos, como: Árvores de decisão, Regressão Logística e \textit{Random Forest}, a partir de uma base de dados simulados de transações de cartão de crédito, levando em consideração metodologias para tratar os problemas das classes desbalanceadas. 
 
 %----------------------------------------------------------------------------------------------------------
 \section{Análise exploratória dos dados e dataprep}
@@ -193,5 +194,9 @@ Faixa & Intervalo             & Quantidade de taxas \\ \hline
 Com o objetivo de calcular a distância geodésica entre o local de moradia do titular do cartão de crédito e o local no qual foi efetuada a transação, foram utilizadas as variáveis \textit{lat, long} referente a primeira localização citada e \textit{merch\_lat, merch\_long}, referente a segunda. Dessa forma, a base recebeu uma coluna \textit{distGeo} que conta com essas distâncias em metros.
 
 %----------------------------------------------------------------------------------------------------------
+
+\section{Referências}
+
+RAMOS, J. A. de P. \textbf{Árvores de Decisão Aplicadas À Detecção de Fraudes Bancárias}. Disponível em: <https://repositorio.unb.br/bitstream/10482/16954/1/2014\_JoseAbiliodePaivaRamos.pdf>. Acesso em: 18 mar. 2022.
 
 \end{document}
